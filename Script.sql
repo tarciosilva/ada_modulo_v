@@ -2,40 +2,43 @@ create database cinema
 
 create sequence seq_cod_filme start 10001
 
-create table FILEMES (
+create table filmes (
 
-	id			integer default nextval('seq_cod_filme'),
-	nome		varchar(20),
-	categoria	varchar(10),
+	id			integer,
+	nome		varchar(100),
+	categoria	varchar(20),
 	duracao		float,
 	lancamento	date
 
 )
 
-insert into filemes (nome, categoria, duracao, lancamento) values
-	('Avatar', 'Fantasia', '150', '2022-12-20'),
-	('O Senhor dos Aneis', 'Fantasia', '184', '2004-12-20'),
-	('Harry Potter', 'Fantasia', '160', '2002-06-20'),
-	('Top Gun', 'Aventura', '89', '2022-08-12'),
-	('Sexta-Feira 13', 'Terror', '78', '2000-04-13')
-	
-select * from filemes 
+insert into filmes values
+	(06, 'Avatar', 'Fantasia', '150', '2022-12-20')
 
-delete from filemes where id = 10005
+insert into filmes (id, nome, categoria, duracao, lancamento) values
+	(1, 'Como eu era Antes de Você', 'drama', '110', '2016-06-16'),
+	(2, 'Pra sempre', 'romance', '104', '2012-06-07'),
+	(3, 'Arremessando Alto', 'drama', '117', '2002-06-03'),
+	(4, 'King Richard', 'drama', '144', '2021-12-02'),
+	(5, 'No Ritmo do Coração', 'drama', '111', '2021-11-23')
+	
+select * from filmes 
+
+delete from filmes where id = 6
 	returning *
 	
-alter table filemes add verificar bool
+alter table filmes add verificar bool
 
-update filemes set verificar = true 
-	where categoria = 'Fantasia'
+update filmes set verificar = true 
+	where categoria = 'drama'
 
-update filemes set id = 6 
-	where nome = 'Avatar'
-	
-select id, nome, categoria from filemes 
+select id, nome, categoria from filmes order by id
 	limit 2
 
-select nome from filemes 
+select nome from filmes where id <> 3
+	order by id 
 
-select * from filemes 
-	where categoria = 'Aventura'
+select * from filmes 
+	where nome = 'Pra sempre'
+	
+drop table filemes
